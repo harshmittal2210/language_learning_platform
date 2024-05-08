@@ -1,4 +1,35 @@
-# Full Stack FastAPI Template
+# Language Learning Platform
+
+
+## Local Setup Guide
+
+### Backend
+
+Make Sure you have `python3.10`
+
+Also setup your Postgres by creating user and creating a database `language_learning_platform`
+
+Change this in `.env`
+
+```
+cd backend
+pip install -r requirements.txt
+python app/backend_pre_start.py
+alembic upgrade head
+python app/initial_data.py
+python app/main.py
+```
+This will open a backend at `http://0.0.0.0:8888`
+
+### Frontend
+
+```
+cd frontend
+npm i
+npm run dev
+```
+
+
 
 <a href="https://github.com/tiangolo/full-stack-fastapi-template/actions?query=workflow%3ATest" target="_blank"><img src="https://github.com/tiangolo/full-stack-fastapi-template/workflows/Test/badge.svg" alt="Test"></a>
 <a href="https://coverage-badge.samuelcolvin.workers.dev/redirect/tiangolo/full-stack-fastapi-template" target="_blank"><img src="https://coverage-badge.samuelcolvin.workers.dev/tiangolo/full-stack-fastapi-template.svg" alt="Coverage"></a>
