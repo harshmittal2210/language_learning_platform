@@ -1,6 +1,7 @@
 import secrets
 import warnings
 from typing import Annotated, Any, Literal
+import os
 
 from pydantic import (
     AnyUrl,
@@ -14,6 +15,22 @@ from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing_extensions import Self
 
+current_file_dir = os.path.dirname(os.path.realpath(__file__))
+env_path = os.path.abspath(os.path.join(current_file_dir, "..","..","..", ".env"))
+
+
+def unset_env():
+    all_env = os.environ
+    if 'POSTGRES_SERVER' in all_env:
+        del os.environ['POSTGRES_SERVER']
+    if 'POSTGRES_PORT' in all_env:
+        del os.environ['POSTGRES_PORT']
+    if 'POSTGRES_USER' in all_env:
+        del os.environ['POSTGRES_USER']
+    if 'POSTGRES_PASSWORD' in all_env:
+        del os.environ['POSTGRES_PASSWORD']
+    if 'POSTGRES_DB' in all_env:
+        del os.environ['POSTGRES_DB']
 
 def parse_cors(v: Any) -> list[str] | str:
     if isinstance(v, str) and not v.startswith("["):
@@ -25,7 +42,7 @@ def parse_cors(v: Any) -> list[str] | str:
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env", env_ignore_empty=True, extra="ignore"
+        env_file=env_path, env_ignore_empty=True, extra="ignore"
     )
     API_V1_STR: str = "/api/v1"
     SECRET_KEY: str = secrets.token_urlsafe(32)
@@ -117,5 +134,5 @@ class Settings(BaseSettings):
 
         return self
 
-
+unset_env()
 settings = Settings()  # type: ignore
