@@ -19,6 +19,7 @@ import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutSettingsImport } from './routes/_layout/settings'
 import { Route as LayoutItemsImport } from './routes/_layout/items'
 import { Route as LayoutAdminImport } from './routes/_layout/admin'
+import { Route as LayoutLanguageDetailsImport } from './routes/_layout/LanguageDetails'
 
 // Create/Update Routes
 
@@ -62,6 +63,11 @@ const LayoutAdminRoute = LayoutAdminImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutLanguageDetailsRoute = LayoutLanguageDetailsImport.update({
+  path: '/LanguageDetails',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -81,6 +87,10 @@ declare module '@tanstack/react-router' {
     '/reset-password': {
       preLoaderRoute: typeof ResetPasswordImport
       parentRoute: typeof rootRoute
+    }
+    '/_layout/LanguageDetails': {
+      preLoaderRoute: typeof LayoutLanguageDetailsImport
+      parentRoute: typeof LayoutImport
     }
     '/_layout/admin': {
       preLoaderRoute: typeof LayoutAdminImport
@@ -105,6 +115,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   LayoutRoute.addChildren([
+    LayoutLanguageDetailsRoute,
     LayoutAdminRoute,
     LayoutItemsRoute,
     LayoutSettingsRoute,

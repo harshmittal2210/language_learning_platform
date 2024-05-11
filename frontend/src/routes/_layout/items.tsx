@@ -52,7 +52,7 @@ function Items() {
               textAlign={{ base: 'center', md: 'left' }}
               pt={12}
             >
-              Items Management
+              Course Management
             </Heading>
             <Navbar type={'Item'} />
             <TableContainer>
