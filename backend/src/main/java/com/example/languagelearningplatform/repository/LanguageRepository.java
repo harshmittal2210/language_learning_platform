@@ -1,8 +1,8 @@
 package com.example.languagelearningplatform.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.languagelearningplatform.model.Language;
 
+// Add repository methods if languages are stored in the database
 public interface LanguageRepository extends JpaRepository<Language, Long> {
-    // No custom methods required
+    // Add custom query methods if needed
 }
