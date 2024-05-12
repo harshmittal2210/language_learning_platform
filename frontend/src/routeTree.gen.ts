@@ -12,9 +12,11 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as ResetPasswordImport } from './routes/reset-password'
+import { Route as RegisterImport } from './routes/register'
 import { Route as RecoverPasswordImport } from './routes/recover-password'
 import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
+import { Route as EnglishQuizImport } from './routes/EnglishQuiz'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutSettingsImport } from './routes/_layout/settings'
 import { Route as LayoutItemsImport } from './routes/_layout/items'
@@ -25,6 +27,11 @@ import { Route as LayoutLanguageDetailsImport } from './routes/_layout/LanguageD
 
 const ResetPasswordRoute = ResetPasswordImport.update({
   path: '/reset-password',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const RegisterRoute = RegisterImport.update({
+  path: '/register',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -40,6 +47,11 @@ const LoginRoute = LoginImport.update({
 
 const LayoutRoute = LayoutImport.update({
   id: '/_layout',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const EnglishQuizRoute = EnglishQuizImport.update({
+  path: '/EnglishQuiz',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -72,6 +84,10 @@ const LayoutLanguageDetailsRoute = LayoutLanguageDetailsImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/EnglishQuiz': {
+      preLoaderRoute: typeof EnglishQuizImport
+      parentRoute: typeof rootRoute
+    }
     '/_layout': {
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
@@ -82,6 +98,10 @@ declare module '@tanstack/react-router' {
     }
     '/recover-password': {
       preLoaderRoute: typeof RecoverPasswordImport
+      parentRoute: typeof rootRoute
+    }
+    '/register': {
+      preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
     '/reset-password': {
@@ -114,6 +134,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren([
+  EnglishQuizRoute,
   LayoutRoute.addChildren([
     LayoutLanguageDetailsRoute,
     LayoutAdminRoute,
@@ -123,6 +144,7 @@ export const routeTree = rootRoute.addChildren([
   ]),
   LoginRoute,
   RecoverPasswordRoute,
+  RegisterRoute,
   ResetPasswordRoute,
 ])
 
